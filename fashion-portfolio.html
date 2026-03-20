@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Influencer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0eb;
+    --gold: #c9a84c;
+    --rose: #c97b8a;
+    --gray: #2a2a2a;
+    --muted: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-right {
+    background: linear-gradient(135deg, #1a0a10 0%, #2d0f1a 40%, #0a0a0a 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(201,120,138,0.25) 0%, transparent 70%);
+  }
+
+  .hero-right-pattern {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fashion-icon {
+    font-size: 220px;
+    opacity: 0.08;
+    transform: rotate(-15deg);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: rotate(-15deg) translateY(0); }
+    50% { transform: rotate(-15deg) translateY(-20px); }
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 0.2s;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 5vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 8px;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 0.4s;
+  }
+
+  .hero-name span {
+    color: var(--rose);
+    font-style: italic;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 2vw, 28px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 30px;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 0.6s;
+  }
+
+  .hero-desc {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #aaa;
+    max-width: 380px;
+    font-weight: 300;
+    margin-bottom: 50px;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 0.8s;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 1s;
+  }
+
+  .stat h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .stat h3 span { color: var(--gold); }
+
+  .stat p {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.4;
+    margin: 0;
+  }
+
+  /* SECTION */
+  section {
+    padding: 100px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .section-title em { color: var(--rose); font-style: italic; }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .service-card {
+    background: var(--black);
+    padding: 50px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+    cursor: default;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .service-card:hover { background: var(--gray); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: rgba(201,168,76,0.08);
+    position: absolute;
+    top: 20px; right: 24px;
+    line-height: 1;
+  }
+
+  .service-icon { font-size: 32px; margin-bottom: 20px; }
+
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  .service-card p {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* CASE STUDIES */
+  .cases {
+    background: var(--gray);
+    padding: 100px 80px;
+  }
+
+  .cases-inner { max-width: 1200px; margin: 0 auto; }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-top: 60px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .case-card {
+    background: #1a1a1a;
+    padding: 50px 44px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .case-card:hover { transform: translateY(-4px); }
+
+  .case-brand {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 12px;
+  }
+
+  .case-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .case-card p {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    font-weight: 300;
+  }
+
+  .case-results {
+    display: flex;
+    gap: 30px;
+  }
+
+  .result-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--gold);
+  }
+
+  .result-item p {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  .case-tag {
+    position: absolute;
+    top: 30px; right: 30px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(201,168,76,0.1);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 6px 14px;
+    border-radius: 2px;
+  }
+
+  /* PROCESS */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 60px;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), var(--rose), var(--gold));
+    opacity: 0.3;
+  }
+
+  .step {
+    text-align: center;
+    padding: 0 20px;
+    position: relative;
+  }
+
+  .step-num {
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--gold);
+    background: var(--black);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .step p {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: linear-gradient(135deg, #0d050a 0%, #150810 100%);
+    padding: 120px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(201,120,138,0.12) 0%, transparent 70%);
+  }
+
+  .contact-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 900;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-section h2 em { color: var(--rose); font-style: italic; }
+
+  .contact-section p {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 50px;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-btn {
+    display: inline-block;
+    padding: 18px 50px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-btn:hover {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-info-item {
+    text-align: center;
+  }
+
+  .contact-info-item .label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .contact-info-item .value {
+    font-size: 14px;
+    color: var(--white);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 24px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: linear-gradient(180deg, rgba(10,10,10,0.9) 0%, transparent 100%);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  /* NICHE BADGE */
+  .niche-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201,120,138,0.1);
+    border: 1px solid rgba(201,120,138,0.3);
+    color: var(--rose);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 2px;
+    margin-bottom: 30px;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">SHIVAM<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="niche-badge">✦ Fashion & Lifestyle</div>
+    <div class="hero-tag">Influencer Marketing Strategist</div>
+    <h1 class="hero-name">Shi<span>vam</span></h1>
+    <p class="hero-title">Fashion × Brand Matchmaker</p>
+    <p class="hero-desc">
+      I connect fashion & lifestyle brands with the right influencers — driving real engagement, authentic storytelling, and measurable results. From micro-influencers to macro campaigns.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <h3>20<span>+</span></h3>
+        <p>Brands Worked With</p>
+      </div>
+      <div class="stat">
+        <h3>50<span>+</span></h3>
+        <p>Influencers Network</p>
+      </div>
+      <div class="stat">
+        <h3>95<span>%</span></h3>
+        <p>Client Satisfaction</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-pattern">
+      <div class="fashion-icon">👗</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What I Offer</div>
+  <h2 class="section-title">Services That <em>Elevate</em><br>Your Brand</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">🔍</div>
+      <h3>Influencer Discovery</h3>
+      <p>Finding the perfect fashion influencers for your brand — matching aesthetic, audience, and engagement metrics precisely.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">🤝</div>
+      <h3>Brand-Influencer Matching</h3>
+      <p>Strategic pairing of brands with influencers based on values, style, and target demographics for maximum authenticity.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">📊</div>
+      <h3>Campaign Management</h3>
+      <p>End-to-end campaign execution — briefing, content approvals, posting schedules, and performance tracking.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-icon">📱</div>
+      <h3>Instagram & Reels Strategy</h3>
+      <p>Platform-specific strategy for fashion brands on Instagram — from feed aesthetics to viral Reels campaigns.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-icon">📈</div>
+      <h3>Analytics & Reporting</h3>
+      <p>Detailed post-campaign reports showing ROI, reach, engagement rate, and conversion metrics that matter.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-icon">💼</div>
+      <h3>Brand Consultation</h3>
+      <p>Advisory services for fashion brands entering influencer marketing for the first time — strategy, budgeting, and more.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CASE STUDIES -->
+<div class="cases" id="work">
+  <div class="cases-inner">
+    <div class="section-label">Case Studies</div>
+    <h2 class="section-title">Campaigns That <em>Worked</em></h2>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-tag">Fashion</div>
+        <div class="case-brand">Clothing Brand</div>
+        <h3>Summer Collection Launch with 5 Micro-Influencers</h3>
+        <p>Matched a homegrown clothing brand with 5 lifestyle influencers in West Bengal for their summer drop — coordinated content, timelines, and hashtag strategy.</p>
+        <div class="case-results">
+          <div class="result-item"><h4>2.3L</h4><p>Reach</p></div>
+          <div class="result-item"><h4>8.4%</h4><p>Engagement</p></div>
+          <div class="result-item"><h4>3x</h4><p>ROI</p></div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-tag">Lifestyle</div>
+        <div class="case-brand">Jewellery Brand</div>
+        <h3>Festive Season Campaign — Durga Puja Collection</h3>
+        <p>Connected a jewellery brand with 3 fashion influencers for a Durga Puja festive campaign — culturally relevant content that resonated deeply with local audiences.</p>
+        <div class="case-results">
+          <div class="result-item"><h4>1.8L</h4><p>Reach</p></div>
+          <div class="result-item"><h4>11%</h4><p>Engagement</p></div>
+          <div class="result-item"><h4>₹2L</h4><p>Sales</p></div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-tag">Beauty</div>
+        <div class="case-brand">Skincare Brand</div>
+        <h3>Product Launch with Beauty Nano-Influencers</h3>
+        <p>Identified 10 nano-influencers (5K–15K followers) for a skincare brand launch — authentic reviews that drove trust and conversions among targeted audiences.</p>
+        <div class="case-results">
+          <div class="result-item"><h4>90K</h4><p>Reach</p></div>
+          <div class="result-item"><h4>14%</h4><p>Engagement</p></div>
+          <div class="result-item"><h4>500+</h4><p>Orders</p></div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-tag">Fashion</div>
+        <div class="case-brand">Ethnic Wear Brand</div>
+        <h3>Pan-India Ethnic Wear Campaign</h3>
+        <p>Coordinated a campaign across 8 influencers in 4 cities for an ethnic wear brand — consistent messaging, diverse representation, strong cultural narrative.</p>
+        <div class="case-results">
+          <div class="result-item"><h4>5L+</h4><p>Reach</p></div>
+          <div class="result-item"><h4>7.2%</h4><p>Engagement</p></div>
+          <div class="result-item"><h4>4x</h4><p>ROI</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-label">How I Work</div>
+  <h2 class="section-title">The <em>Process</em></h2>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Discovery</h3>
+      <p>Understanding your brand, goals, target audience, and budget in a detailed briefing session.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Research</h3>
+      <p>Identifying and vetting the best influencers — checking authenticity, engagement, and audience fit.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Match & Pitch</h3>
+      <p>Presenting the best influencer options, negotiating deals, and finalizing partnerships.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Results</h3>
+      <p>Managing the campaign, tracking performance, and delivering detailed reports with key insights.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <h2>Let's Build Something<br><em>Beautiful</em> Together</h2>
+  <p>Ready to connect your fashion brand with the perfect influencer? Let's talk.</p>
+  <a href="mailto:byshivampromotion@gmail.com" class="contact-btn">Get In Touch</a>
+  <div class="contact-info">
+    <div class="contact-info-item">
+      <div class="label">Email</div>
+      <div class="value">byshivampromotion@gmail.com</div>
+    </div>
+    <div class="contact-info-item">
+      <div class="label">Instagram</div>
+      <div class="value">@hyroinflience</div>
+    </div>
+    <div class="contact-info-item">
+      <div class="label">Location</div>
+      <div class="value">Krishnanagar, West Bengal</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
